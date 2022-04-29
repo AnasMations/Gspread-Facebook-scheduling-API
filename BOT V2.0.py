@@ -2,6 +2,7 @@ import gspread
 from oauth2client.service_account import ServiceAccountCredentials
 import requests
 import datetime
+import time
 
 #Current bug: can't post a confession that includes hash sign #
 
@@ -60,7 +61,12 @@ if endPoint == 0:
 
 print()
 
+c=1
 for i in range(startPoint, endPoint + 1):
+    #delay for Gspread api write request quota
+    if(c%5==0):
+        time.sleep(30)
+
     row = sheet.row_values(i)
 
     #Reverse arabic confession
@@ -96,7 +102,6 @@ for i in range(startPoint, endPoint + 1):
             timeIndex = 0
 
         postTime = timeList[timeIndex].split(":")
-
         hour = int(postTime[0])
         minute = int(postTime[1][:-2])
         if ((postTime[1][-2] + postTime[1][-1]).lower() == "pm"):
@@ -120,6 +125,7 @@ for i in range(startPoint, endPoint + 1):
 
     sheet2.update("A1", str(confNum))
     sheet2.update("B1", str(i+1))
+    c=c+1
 
     print("--------------------------------------------------\n")
 
