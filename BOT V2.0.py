@@ -13,10 +13,10 @@ f.close()
 
 def postOnFacebook(confession, epochTime):
     response = requests.post("https://graph.facebook.com/" + fbPageid + "/feed" +
-                             "?published=false" +
-                             "&message=" + confession +
-                             "&scheduled_publish_time=" + str(int(epochTime)) +
-                             "&access_token=" + fbToken)
+                            "?published=false" +
+                            "&message=" + confession +
+                            "&scheduled_publish_time=" + str(int(epochTime)) +
+                            "&access_token=" + fbToken)
     return response
 
 print("Loading spreadsheet...")
